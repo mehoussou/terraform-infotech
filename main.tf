@@ -18,6 +18,8 @@ variable "env_prefix" {}
 variable "my_ip" {}
 variable "instance_type" {}
 variable "public_key_location" {}
+variable "ec2_public_ip_infotech" {}
+variable "ec2_public_ip_jenkins" {}
 
 resource "aws_vpc" "Infotech-vpc" {
   cidr_block = var.vpc_cidr_block
@@ -25,6 +27,15 @@ resource "aws_vpc" "Infotech-vpc" {
     Name = "${var.env_prefix}-vpc"
   }
 }
+
+resource "aws_vpc" "Jenkins-server-vpc" {
+  cidr_block = var.vpc_cidr_block
+  tags = {
+    Name = "${var.env_prefix}-vpc"
+  }
+}
+
+
 
 resource "aws_subnet" "Infotech-subnet-1" {
   vpc_id            = aws_vpc.Infotech-vpc.id
@@ -115,14 +126,31 @@ resource "aws_instance" "Infotech-server" {
   }
 }
 
-output "aws_ami_id" {
-  value = data.aws_ami.latest-amazon-linux-image.id
-}
 
-output "ec2_public_ip" {
+output "ec2_public_ip_infotech" {
   value = aws_instance.Infotech-server.public_ip
 }
 
+output "ec2_public_ip_jenkins" {
+  value = aws_instance.Jenkins-server.public_ip
+}
+
+
+resource "aws_instance" "Jenkins-server" {
+  ami = data.aws_ami.latest-amazon-linux-image.id
+  instance_type = var.instance_type
+  subnet_id = aws_subnet.Infotech-subnet-1.id
+  vpc_security_group_ids = [aws_default_security_group.default-sg.id]
+  availability_zone = var.avail_zone
+  associate_public_ip_address = true
+  key_name = aws_key_pair.ssh-key.key_name
+
+  #user_data = file("entry-script.sh")
+  
+  tags = {
+    Name = "Jenkins-Srv"
+  }
+}
 # resource "aws_route_table" "myapp-route-table" {
 #   vpc_id = aws_vpc.myapp-vpc.id
 #   route {
