@@ -1,4 +1,4 @@
-module "infotech-eks" {
+module "eks" {
   source = "terraform-aws-modules/eks/aws"
   version = "~> 18.0"
 
@@ -6,8 +6,7 @@ module "infotech-eks" {
   cluster_version = "1.22"
 
   subnet_ids = module.infotech-vpc.private_subnets
-  vpc_id = module.infotech-vpc.vpc_cidr_block
-
+  vpc_id= module.infotech-vpc.vpc_id
   tags = {
     environment = "deployment"
     application = "infotech"
