@@ -19,7 +19,7 @@ variable "my_ip" {}
 variable "instance_type" {}
 variable "public_key_location" {}
 variable "ec2_public_ip_infotech" {}
-variable "ec2_public_ip_jenkins" {}
+/* variable "ec2_public_ip_jenkins" {} */
 
 resource "aws_vpc" "Infotech-vpc" {
   cidr_block = var.vpc_cidr_block
@@ -28,12 +28,12 @@ resource "aws_vpc" "Infotech-vpc" {
   }
 }
 
-resource "aws_vpc" "Jenkins-server-vpc" {
+/* resource "aws_vpc" "Jenkins-server-vpc" {
   cidr_block = var.vpc_cidr_block
   tags = {
     Name = "${var.env_prefix}-vpc"
   }
-}
+} */
 
 
 
@@ -131,12 +131,12 @@ output "ec2_public_ip_infotech" {
   value = aws_instance.Infotech-server.public_ip
 }
 
-output "ec2_public_ip_jenkins" {
+/* output "ec2_public_ip_jenkins" {
   value = aws_instance.Jenkins-server.public_ip
-}
+} */
 
 
-resource "aws_instance" "Jenkins-server" {
+/* resource "aws_instance" "Jenkins-server" {
   ami = data.aws_ami.latest-amazon-linux-image.id
   instance_type = var.instance_type
   subnet_id = aws_subnet.Infotech-subnet-1.id
@@ -149,8 +149,8 @@ resource "aws_instance" "Jenkins-server" {
   
   tags = {
     Name = "Jenkins-Srv"
-  }
-}
+  } */
+/* } */
 # resource "aws_route_table" "myapp-route-table" {
 #   vpc_id = aws_vpc.myapp-vpc.id
 #   route {
