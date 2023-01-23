@@ -29,7 +29,7 @@ variable "my_ip" {}
 variable "instance_type" {}
 variable "public_key_location" {}
 variable "ec2_public_ip_infotech" {}
-/* variable "ec2_public_ip_jenkins" {} */
+
 
 resource "aws_vpc" "Infotech-vpc" {
   cidr_block = var.vpc_cidr_block
@@ -37,13 +37,6 @@ resource "aws_vpc" "Infotech-vpc" {
     Name = "${var.env_prefix}-vpc"
   }
 }
-
-/* resource "aws_vpc" "Jenkins-server-vpc" {
-  cidr_block = var.vpc_cidr_block
-  tags = {
-    Name = "${var.env_prefix}-vpc"
-  }
-} */
 
 
 
