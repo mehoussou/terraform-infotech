@@ -8,4 +8,3 @@ my_ip="75.71.114.225/32"
 instance_type="t2.micro" 
 public_key_location="/home/mc/.ssh/id_rsa.pub"
 ec2_public_ip_infotech="Infotech"
-/* ec2_public_ip1_jenkins="jenkins" */
